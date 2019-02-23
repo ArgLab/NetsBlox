@@ -1,4 +1,3 @@
-[submodule "src/browser"]
+[submodule "src/Snap--Build-Your-Own-Blocks"]
 	path = src/browser
-	url = https://github.com/netsblox/Snap--Build-Your-Own-Blocks
-	branch = netsblox
+	url = https://github.com/ArgLab/Snap--Build-Your-Own-Blocks.git
