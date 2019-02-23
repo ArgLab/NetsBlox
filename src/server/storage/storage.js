@@ -24,8 +24,8 @@ Storage.getDatabaseFromURI = function(mongoURI) {
 };
 
 Storage.prototype.connect = function(mongoURI) {
-    mongoURI = mongoURI || process.env.MONGO_URI || process.env.MONGOLAB_URI || 'mongodb://localhost:27017';
-    const dbName = Storage.getDatabaseFromURI(mongoURI);
+    mongoURI = mongoURI || process.env.MONGO_URI || process.env.MONGOLAB_URI || 'mongodb://localhost:27017/flecksDB';
+    const dbName = 'flecksDB';
     return Q(MongoClient.connect(mongoURI))
         .then(client => {
             const db = client.db(dbName);
