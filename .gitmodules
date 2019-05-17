@@ -1,3 +1,4 @@
 [submodule "src/browser"]
 	path = src/browser
 	url = https://github.com/ArgLab/Snap--Build-Your-Own-Blocks
+	branch = master
