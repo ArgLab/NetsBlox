@@ -75,6 +75,7 @@ class Client {
         // accept the event here and broadcast to everyone
         const projectId = this.projectId;
         const roleId = this.roleId;
+
         return this.canApplyAction(msg.action)
             .then(canApply => {
                 const sockets = NetworkTopology.getSocketsAt(projectId, roleId);
@@ -86,6 +87,8 @@ class Client {
                     // Only set the role's action id if not user action
                     msg.roleId = roleId;
 
+                    console.log("CAN APPLY ACTION")
+
                     if (!msg.action.isUserAction) {
                         return ProjectActions.setLatestActionId(projectId, roleId, msg.action.id)
                             .then(() => ProjectActions.store(msg));
@@ -95,6 +98,7 @@ class Client {
                 } else {
                     msg.type = 'action-rejected';
                     this.send(msg);
+                    console.log("CANNOT APPLY ACTION");
                 }
             });
     }
