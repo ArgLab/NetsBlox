@@ -1,7 +1,7 @@
 [submodule "src/browser"]
 	path = src/browser
 	url = https://github.com/ArgLab/Netsblox
-	branch = netsblox
+	branch = master
 [submodule "src/server/rpc/procedures/roboscape/speckjs"]
 	path = src/server/rpc/procedures/roboscape/speckjs
 	url = https://github.com/hamidzr/speckjs
