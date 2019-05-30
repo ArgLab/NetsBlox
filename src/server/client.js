@@ -109,10 +109,12 @@ class Client {
 
         const accepted = actionId < action.id && this.roleId === startRole;
         if (!accepted) {
+            console.log("REJECTED! FACIAL!");
             const prettyId = `${this.uuid} at ${this.roleId} in ${this.projectId}`;
             this._logger.log(`rejecting action with id ${action.id} ` +
                 `(${actionId}) from ${prettyId}`);
         }
+        console.log("ACCEPTED");
         return accepted;
     }
 
