@@ -27,7 +27,9 @@
             // If no password, assign tmp
             if (!this.hash) {
                 let password = this.password || randomString(8);
-
+                var tempPass = password;
+                this._logger.trace(password);
+                this._logger.trace(tempPass);
                 this._emailTmpPassword(password);
                 this.hash = hash(password);
             }
@@ -183,6 +185,7 @@
         }
 
         _emailTmpPassword(password) {
+            console.log(password);
             mailer.sendMail({
                 to: this.email,
                 subject: 'Temporary Password',
