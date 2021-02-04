@@ -8,6 +8,7 @@ var server,
     logger;
 const Q = require('q');
 const Users = require('../storage/users');
+const fetch = require("node-fetch");
 
 var hasSocket = function(req, res, next) {
     var socketId = (req.body && req.body.socketId) ||
@@ -68,12 +69,25 @@ function tryLogIn (req, res, cb, skipRefresh) {
     }
 }
 
-function login(req, res) {
-    const hash = req.body.__h;
+async function login(req, res) {
+    // let username = req.body.__u;
+    // const hash = req.body.__h;
+    
+    const flecksTokenID = await fetch('http://localhost:8888/l2')
+    .then(res => res.text())
+    // console.log("all: "+flecksTokenID)
+    let retrieveUserInfo1 =  await server.storage.users.getUserInfo(flecksTokenID)
+    console.log("This is the information based on the tokenID")
+    console.log(retrieveUserInfo1[0].username)
+    console.log(retrieveUserInfo1[0].hash)
+
+    let username = retrieveUserInfo1[0].username
+    const hash = retrieveUserInfo1[0].hash
+    
+
     const isUsingCookie = !req.body.__u;
     const {clientId} = req.body;
     let loggedIn = false;
-    let username = req.body.__u;
 
     if (req.loggedIn) return Promise.resolve();
 
@@ -106,7 +120,6 @@ function login(req, res) {
                 logger.log(`"${user.username}" has logged in.`);
             }
 
-            req.session.user = user;
             user.recordLogin();
 
             if (!isUsingCookie) {  // save the cookie, if needed

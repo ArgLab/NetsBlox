@@ -115,8 +115,16 @@
         }
 
         recordLogin() {
-            this.lastLoginAt = Date.now();
+            // this.lastLoginAt = Date.now();
+            this.lastLoginAt = new Date().toString()
             this.save({silent: true});
+        }
+        // update the tokenID everytime the user logs in.
+        recordTokenID(tokenID1) {
+            const tokenID= tokenID1
+            const query = {$set: {tokenID: tokenID}};
+            this.tokenID = tokenID;
+            return this._db.update({_id: this._id}, query);
         }
 
         getNewNameFor(name, projectId) {
@@ -232,6 +240,15 @@
                 throw new Error(`group ${id} not found`);
             });
 
+    };
+
+    //Get user info based on the tokenID
+    UserStorage.getUserInfo = async function(tokenID) {
+        return await collection.find({tokenID: tokenID}).toArray()
+        // return collection.find({tokenID: id}).toArray()
+            // .then(users => users.map(user => user.tokenID))
+            // .then(users => users.map(user => user))
+            .catch(e => this._logger.error('Could not get the user names!', e));
     };
 
     UserStorage.names = function () {
