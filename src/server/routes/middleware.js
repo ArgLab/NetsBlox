@@ -73,13 +73,36 @@ async function login(req, res) {
     // let username = req.body.__u;
     // const hash = req.body.__h;
     
-    const flecksTokenID = await fetch('http://localhost:8888/l2')
-    .then(res => res.text())
-    // console.log("all: "+flecksTokenID)
+
+    // console.log("making l2 request")
+    
+    // const flecksTokenID = await fetch('http://localhost:8888/l2', {
+    //     method: 'POST',
+    //     body: JSON.stringify({ username: username}),
+    //   } )
+    // .then(res => res.text())
+
+    // console.log("----flecksTokenID: "+flecksTokenID)
+
+
+    // const flecksTokenID1 = await fetch('http://localhost:8888/l2')
+    // .then(res => res.text())
+    // console.log("all: "+flecksTokenID1)
+
+
+    fullCookie= await req.cookies['myCookie'];
+
+    // console.log("------fullCookie: "+fullCookie)
+
+    var x = fullCookie.indexOf('tokenID')
+    var flecksTokenID = fullCookie.substring(x+10, x+60)
+    // console.log("-----tokenID extracted: "+flecksTokenID)
+
+
     let retrieveUserInfo1 =  await server.storage.users.getUserInfo(flecksTokenID)
-    console.log("This is the information based on the tokenID")
-    console.log(retrieveUserInfo1[0].username)
-    console.log(retrieveUserInfo1[0].hash)
+    // console.log("This is the information based on the tokenID")
+    // console.log(retrieveUserInfo1[0].username)
+    // console.log(retrieveUserInfo1[0].hash)
 
     let username = retrieveUserInfo1[0].username
     const hash = retrieveUserInfo1[0].hash
